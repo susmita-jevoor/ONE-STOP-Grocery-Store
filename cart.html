@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="'UTF-8">
+        <title>One-stop</title> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
+        4.7.0/css/font-awesome.min.css">
+            <link rel="icon" type="image/x-icon" href="/static/images/logo.ico">
+
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body class="thispage4 bodycart">
+                    <table border="0" width="100%" bgcolor="#202020"> 
+    <tr>
+        <td align="left"><img src="/static/images/logo.png"></td>
+        <th align="left" style="color:white"><h2>ONE-STOP</h2></th>
+      <th align="right"><a href="/dashboard/{{customer_email}}"><button type="submit" name="add_to_cart" class="go-back btn-area3" value="">Dashboard</button></a></th>
+        <th><a href="/" class='logout'><button  class="logout btn-area2" value="">Logout</button></a></font></th>
+        
+    </tr>
+    </table>
+      <div class="aligncenter">
+<h1 style="font-size: 50px"><i>Shopping Cart</i></h1>
+                          <form method="POST">
+
+                <button type="submit" name="proceed" class="btn-area btn2 proceed" value="">Proceed to checkout with {{all_items|length}} items</button><br><br></div>
+    </form>
+        <div class="wrapper">
+            
+            <div class="project">
+                <div class="shop">
+                   {% for item in all_items %}
+                    <div class="box">
+                        <img src="{{item[3]}}" alt="">
+                        <div class="content">
+                            <h2>{{item[0]}}</h2>
+
+                            <h4>Price: {{item[1]}}</h4>
+                            <h4>Quantity: {{item[2]}}</h4>
+
+
+  <a href="/{{customer_email}}/{{item[4]}}/removeitem" style="color: white; text-decoration:none"><button type="" name="add_to_cart" class="btn-area btn2" value=>Remove</button></a>
+                            
+                        </div>
+                    </div>
+                  {% endfor %}
+                  <div>
+                  <input name="myList" value="{{myList}}" hidden>
+                  </div>
+                </div>
+
+                
+            </div>
+
+        </div>
+    </body>
+</html>
