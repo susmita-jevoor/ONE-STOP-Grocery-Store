@@ -2,13 +2,9 @@ import os
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
-current_dir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(
-    current_dir, "database.db")
 db = SQLAlchemy()
 db.init_app(app)
-app.app_context().push()
 
 
 class Customer(db.Model):
@@ -122,50 +118,7 @@ try:
 except:
     render_template("oops.html")
 
-try:
 
-    @app.route("/items/<string:customer_email>/<string:stock_type>",
-               methods=["GET", "POST"])
-    def items_page(customer_email, stock_type):
-        if request.method == 'GET':
-            available_stock = Stock.query.filter_by(
-                stock_type=stock_type).all()
-            #print(available_stock)
-            return render_template("items.html",
-                                   customer_email=customer_email,
-                                   available_stock=available_stock,
-                                   stock_type=stock_type)
-        else:
-            stock_id = int(request.form['add_to_cart'])
-            present_stockid = Stock.query.filter_by(stock_id=stock_id).first()
-            buys_exists = Buys.query.filter_by(
-                stock_id=present_stockid.stock_id).first()
-            if buys_exists is None:
-                stock_id = request.form['add_to_cart']
-                quantity = request.form['item_quantity']
-                cust_obj = Customer.query.filter_by(
-                    customer_email=customer_email).first(
-                    )  #to get only 1 record #to obtain cust_id
-                new_buys = Buys(stock_id=stock_id,
-                                customer_id=cust_obj.customer_id,
-                                item_quantity=quantity)
-                db.session.add(new_buys)
-                db.session.commit()
-            else:  #if item already in the cart 
-                quantity = request.form['item_quantity']
-                print(quantity)
-                buys_exists.item_quantity = quantity
-                db.session.commit()
-            #delete buys id after purchase
-            #show pop up message that item added to cart
-            #url1 = "/" + str(customer_email)
-            return render_template("item_added.html",
-                                   customer_email=customer_email,
-                                   stock_name=present_stockid.stock_name,
-                                   stock_type=stock_type)
-
-except:
-    render_template("oops.html")
 
 try:
 

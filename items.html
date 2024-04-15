@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            ONE-STOP
+        </title>  
+            <link rel="stylesheet" href="/static/style.css">
+      <link rel="icon" type="image/x-icon" href="/static/images/logo.ico">
+
+
+    </head>
+    <body bgcolor="#FFFFFF">
+              <table border="0" width="100%" bgcolor="#202020"> 
+    <tr>
+        <td align="left"><img src="/static/images/logo.png"></td>
+        <th align="left" style="color:white"><h2>ONE-STOP</h2></th>
+        <th align="right" class="my-cart zoom-img2"><a  href="/{{customer_email}}"><img src="/static/images/cart.png"></a></th>
+      <th align="right"><a href="/dashboard/{{customer_email}}"><button type="submit" name="add_to_cart" class="go-back btn-area3" value="">Go back</button></a></th>
+        <th><a href="/" class='logout'><button  class="logout btn-area2" value="">Logout</button></a></font></th>
+        
+    </tr>
+    </table>
+
+    <table style="width:50%" class="tablecenter">
+
+      {% for stock in available_stock %}
+      {% if stock.stock_quantity !=0: %}
+    
+  <tr>
+    <th></th>
+  </tr>
+  <tr>
+    <form method="POST">
+    <td><img src={{stock.stock_image}} alt="Image1" class="zoom-img img-fluid card-img-top" width="300" height="300"></td>
+    <td><h1><i>{{stock.stock_name}}</i></h1>
+      <h3>Price: {{stock.stock_price}} </h3>
+        <h3> Description: {{stock.stock_description}} </h3>
+      <h3><p class="unit">Quantity: <input name="item_quantity" type="number" min="1" max="10" value="{{stock.stock_per_price}}"></p></h3>
+        <div class="btn-box">
+      <button type="submit" name="add_to_cart" class="btn-area btn2" value={{stock.stock_id}}>Add to Cart</button>
+                  
+        </div>
+      </form>
+    </td>
+  </tr>
+      {% endif %}
+{% endfor %}
+    </table> 
+    </body> 
+</html>

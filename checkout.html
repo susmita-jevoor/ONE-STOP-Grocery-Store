@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="'UTF-8">
+        <title>One-stop</title> 
+        <link rel="icon" type="image/x-icon" href="../static/images/logo.ico"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/
+        4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../static/style.css">
+ 
+    </head>
+    <body class="thispage4 bodycart">
+                    <table border="0" width="100%" bgcolor="#202020"> 
+    <tr>
+        <td align="left"><img src="/static/images/logo.png"></td>
+        <th align="left" style="color:white"><h2>ONE-STOP</h2></th>
+                  <th align="right"><a href="/dashboard/{{customer_email}}"><button type="submit" name="add_to_cart" class="go-back btn-area3" value="">Dashboard</button></a></th>
+        <th align="right"><a href="/{{customer_email}}"><button type="submit" name="add_to_cart" class="go-back btn-area3" value="">Go back</button></a></th>
+        <th><a href="/" class='logout'><button  class="logout btn-area2" value="">Logout</button></a></font></th>
+        
+    </tr>
+    </table>
+
+
+{% if buying_items|length == 0: %}
+      <div class="aligncenter">
+      <h1>No Items for checkout!</h1>
+      <br>
+            <a href="/dashboard/{{customer_email}}"><button type="submit" name="add_to_cart" class="btn-area btn2" value="">Add items!</button></a>
+      </div>
+{% else %}
+<form method="POST">
+        <div class="wrapper-3">
+            <h1>Checkout</h1>
+
+
+          <div class="project2">
+                <div class="right-bar2">
+                  <h2>Bill</h2>
+                    <table class="tablecheckout">
+  <tr class="trcheckout">
+    <div class="thcheckout">
+    <th><i>Item</b></th>
+    <th>MRP(in Rs)</th>
+    <th>Quantity</th>
+    <th>Amount(in Rs)</th>
+    </div>
+  </tr>
+  <hr>
+  {% for item in buying_items %}
+  <tr class="trcheckout2">
+    <div class="tdcheckout">
+    <td>{{item["stock_name"]}}</td>
+    <td>{{item["stock_price"]}}</td>
+    <td>{{item["stock_quantity"]}}</td>
+    <td>{{item["stock_amount"]}}</td>
+      </div>
+  </tr>
+    {% endfor %}
+  
+</table>
+                </div>
+            </div>
+          <br>
+            <div class="project">
+                <div class="right-bar2">
+                    <p><span>Subtotal</span> <span>Rs {{tot}}</span></p>
+                    <hr>
+                    <p><span>Tax (5%)</span> <span>Rs {{gst}}</span></p>
+                    <hr>
+                    <p><span>Total</span> <span>Rs {{final}}</span></p>
+
+                    <button type="" name="make_purchase" class="btn-area btn2">Make Purchase</button>
+                </div>
+            </div>
+
+        </div>
+</form>
+      {% endif %}
+    </body>
+</html>
